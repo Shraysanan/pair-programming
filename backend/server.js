@@ -18,28 +18,34 @@ const server = app.listen(process.env.PORT||5000,process.env.IP,function(){
     console.log('server has started')
    });
 
-const io = socket(server);
+   const io = require('socket.io')(server, {
+    cors: {
+      origin: '*',
+    }
+  });
 
 // test for connection
 io.on('connection', socket => {
+  console.log("id:", socket.id)
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
 
   // Join room when 'room' event is emitted
   socket.on('room', data => {
+    // console.log(",,,,,,,,,,,,",socket.rooms);
     socket.join(data.room, err => {
       if (err) console.error(err);
     });
-    console.log(`User ${socket.id} joined room ${data.room}`);
-    console.log(io.sockets.adapter.rooms);
+    // console.log(`User ${socket.id} joined room ${data.room}`);
+    // console.log(io.sockets.adapter.rooms);
   });
 
   // TODO: Handle leave room event when user switches room
 
   // handle coding event
   socket.on('coding', data => {
-    console.log(data);
-    socket.broadcast.to(data.room).emit('code sent from server', data);
+    // console.log("=======================",data);
+    socket.to(data.room).emit('code sent from server', data);
   });
 });
