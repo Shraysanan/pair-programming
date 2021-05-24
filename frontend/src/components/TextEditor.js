@@ -285,16 +285,22 @@ const handleChange = (e) => {
   setlanguage(e.target.value);
 }
 
+
+
+
     return (
+      
         <div>
+           <h1>hello</h1>
           <select value={language} onChange={(e)=>handleChange(e)}>
               {languages.map((option) => (
                   <option value={option.id}>{option.name}</option>
               ))}
           </select>
-            <h1>hello</h1>
-            <div>
+           <div className="coding row no-gutters">
+            <div className="code col-6">
               <CodeMirror
+                id="code"
                 value={Codetext}
                 options={{
                   mode: 'javascript',
@@ -309,30 +315,37 @@ const handleChange = (e) => {
 
               />
             </div>
-            <div>
-              <CodeMirror
-                value={Iptext}
+            <div className="col-6">
+              <div className="row">
+                <div className="iptext col-12">
+                <CodeMirror
+                  id="iptext"
+                  value={Iptext}
+                  options={{
+                    mode: 'javascript',
+                    theme: 'dracula',
+                    lineNumbers: true
+                  }}
+                  onBeforeChange={(editor, data, value) => {
+                    updateIpText(value)
+                  }}
+                />
+                </div>
+                <div className="optext col-12">
+                <CodeMirror
+                id="optext"
                 options={{
                   mode: 'javascript',
                   theme: 'dracula',
                   lineNumbers: true
                 }}
-                onBeforeChange={(editor, data, value) => {
-                  updateIpText(value)
-                }}
-              />
+                  value={Optext}
+                />
+                </div>
+              </div>
             </div>
-            <div>
-              <CodeMirror
-               options={{
-                mode: 'javascript',
-                theme: 'dracula',
-                lineNumbers: true
-              }}
-                value={Optext}
-              />
-            </div>
-           
+           </div>
+
              <button onClick={ () => createsubmisssion(Codetext, language, Iptext)}>Run</button>
         </div>
     )

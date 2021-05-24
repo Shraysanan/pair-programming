@@ -1,1 +1,16 @@
-.CodeMirror { text-align: left!important; }
+.code .CodeMirror {
+     text-align: left!important; 
+     height: 100% !important;
+}
+
+.CodeMirror {
+     text-align: left!important; 
+}
+
+.code .react-codemirror2{
+    height: 100%;
+}
+
+#code{
+    height: 100%;
+}
