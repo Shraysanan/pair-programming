@@ -219,7 +219,7 @@ const createsubmisssion = (source_code,languageid,stdin) => {
   
   var config = {
     method: 'post',
-    url: 'https://ce.judge0.com/submissions/?base64_encoded=true&wait=false',
+    url: 'https://ce.judge0.com/submissions/?base64_encoded=true&wait=true',
     headers: { 
       'Content-Type': 'application/json'
     },
@@ -228,12 +228,9 @@ const createsubmisssion = (source_code,languageid,stdin) => {
   
   axios(config)
   .then(function (response) {
-    console.log(JSON.stringify(response.data));
-    setTimeout(function(){ 
-      getsubmission(response.data.token);
-  }, 6000); 
-    
+    console.log(JSON.stringify(response.data)); 
     localStorage.setItem('token',response.data.token)
+    getsubmission(response.data.token);
   })
   .catch(function (error) {
     console.log(error);
