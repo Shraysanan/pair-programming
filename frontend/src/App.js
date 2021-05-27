@@ -4,6 +4,7 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import {Provider} from 'react-redux'
 import login from './components/Login'
 import Register from './components/Register'
+import Profile from './components/Profile'
 import store from './store'
 import PrivateRoute from './components/routing/PrivateRoute'
 
@@ -16,6 +17,7 @@ function App() {
           {/* <Ide/> */}
           <Route path='/' component={login}/>
           <Route path='/Register' component={Register}/>
+          <Route path='/Profile' component={Profile}/>
           <PrivateRoute path='/texteditor' component={TextEditor}/>
           {/* // <TextEditor/>  */}
         </BrowserRouter>

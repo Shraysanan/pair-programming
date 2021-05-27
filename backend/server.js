@@ -4,6 +4,9 @@ const bodyParser=require("body-parser");
 // const socket = require('socket.io');
 const cors = require('cors');
 const mongoose=require("mongoose");
+// const Code = require('./models/code')
+// const User = require('./models/user')
+
 const mongourl="mongodb+srv://eduzone12345:eduzone12345@pair-programming.dostt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 mongoose.connect(mongourl,{useNewUrlParser: true,useUnifiedTopology: true},function(err, db) {
@@ -24,6 +27,7 @@ app.get("/",function(req,res){
 
 app.use("/register",require('./routes/userRoutes'));
 app.use("/login", require("./routes/LoginRoute"));
+app.use("/code", require("./routes/CodeRoute"));
 
 const server = app.listen(process.env.PORT||5000,process.env.IP,function(){
     console.log('server has started')

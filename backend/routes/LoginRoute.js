@@ -40,15 +40,17 @@ router.post('/',[
             return res.status(400).json({ errors: [{msg: 'Invalid Credentials'}] })
         }
 
-        res.status(200).send('logged in')
+        // res.status(200).send('')
     
         //Return json webtoken
     
-    // const payload ={
-    //     User: {
-    //         id: User.id,
-    //     }
-    // }
+    const payload ={
+        User: {
+            id: User.id,
+        }
+    }
+    res.send({"userid":payload.User.id});
+
 
     // await jwt.sign(payload,jwtSecret,
     // {expiresIn: 360000},//optional
