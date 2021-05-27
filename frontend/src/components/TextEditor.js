@@ -299,6 +299,7 @@ const handleChange = (e) => {
           </select>
            <div className="coding row no-gutters">
             <div className="code col-6">
+              <p>code.c</p>
               <CodeMirror
                 id="code"
                 value={Codetext}
