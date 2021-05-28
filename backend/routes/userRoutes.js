@@ -7,7 +7,7 @@ const{check, validationResult} = require('express-validator');
 const user = require('../models/user.js');
 
 //Test route
-//public
+//public`
 router.post('/',[ 
     check('name', 'Name is required').not().isEmpty(),
     check('email', 'Please include a proper email').isEmail(), //email format
@@ -49,14 +49,15 @@ router.post('/',[
         await User.save();
 
         console.log('after saving user');
-        res.status(200).send("user saved");
+        // res.status(200).send("user saved");
     // //Return json webtoken
     
-    // const payload = {
-    //     User: {
-    //         id: User.id,
-    //     }
-    // }
+    const payload = {
+        User: {
+            id: User.id,
+        }
+    }
+    res.status(200).send({"userid":payload.User.id});
 
     // await jwt.sign(payload,jwtSecret,
     // {expiresIn: 360000},//optional

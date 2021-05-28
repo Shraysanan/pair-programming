@@ -5,6 +5,7 @@ import {Provider} from 'react-redux'
 import login from './components/Login'
 import Register from './components/Register'
 import Profile from './components/Profile'
+import MyCode from './components/MyCode'
 import store from './store'
 import PrivateRoute from './components/routing/PrivateRoute'
 
@@ -15,8 +16,10 @@ function App() {
       <Provider store={store}>
         <BrowserRouter>
           {/* <Ide/> */}
-          <Route path='/' component={login}/>
-          <Route path='/Register' component={Register}/>
+          <Route exact path='/' component={login}/>
+          <Route exact path='/login' component={login}/>
+          <Route exact path='/Register' component={Register}/>
+          <Route exact path='/mycode/:id' component={MyCode}/>
           <Route path='/Profile' component={Profile}/>
           <PrivateRoute path='/texteditor' component={TextEditor}/>
           {/* // <TextEditor/>  */}

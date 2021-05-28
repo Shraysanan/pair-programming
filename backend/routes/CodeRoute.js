@@ -4,24 +4,29 @@ const User = require('../models/user');
 const Code = require('../models/code')
 
 router.post('/',async(req,res)=>{
-   
-    const codeId = req.header('codeid')??null;
+    const codeId = req.header('codeid');
     const userId = req.header('userid');
+    console.log("userid",userId);
+    console.log("codeid",codeId);
     User.findById(userId,function(err,user){
         if(err){
           console.log(err);
           res.status(500).send(err);
         }
         else{
+          console.log("user",user);
+          
           if(codeId==null){
-            Code.create(req.body.mycode,function(err,code){
+            Code.create(req.body,function(err,code){
+              console.log(req.body);
                 if(err){
                     console.log(err);
                     res.status(500).send(err);
                   }
                   else{
                     code.author.id=userId;
-                    code.author.username=user.name;
+                    // code.author.username=user.name;
+                    console.log(userId)
                     code.save();
                     user.mycodes.push(code);
                     user.save();
@@ -30,7 +35,7 @@ router.post('/',async(req,res)=>{
             });
           }  
           else{
-            Code.findByIdAndUpdate(codeId,req.body.mycode,(err,foundcode)=>{
+            Code.findByIdAndUpdate(codeId,req.body,(err,foundcode)=>{
               if (err){
                 res.status(500).send(err);
               } 
@@ -66,6 +71,7 @@ router.get('/mycode/:id',async (req,res)=>{
           res.status(500).send(err);
       }else{
           res.status(200).send(code);
+          console.log(code);
       }
   });
   

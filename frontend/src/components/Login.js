@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import {login} from '../actions/auth';
 import { TextField } from '@material-ui/core';
 import { Button } from '@material-ui/core';
-// import "./Login.css";
+import "./Login.css";
 // import Header from "./Header";
 
 const Login = ({ login, isAuthenticated }) => {
@@ -29,13 +29,15 @@ const Login = ({ login, isAuthenticated }) => {
     }
     return <Fragment>
         <>
-            {/* <Header/> */}
             <div className="signForm">
-                <div className="container bx">
-                    {/* <div className="col-6">
-                        <img className="loginImg" src="media/cryto.jpg" alt="data not loaded" />
-                    </div> */}
+                <div className="titleR">
+                    <h1>Welcome Back ! Let's get back to work !</h1>
+                </div>
+                <div className="container bx row">
                     <div className="col-6">
+                        <img className="loginImg" src="register.png" alt="data not loaded" />
+                    </div>
+                    <div className="col-6 fo">
                         <h1 className="large text-primary">Sign In</h1>
                         <p className="lead"><i className="fas fa-user"></i> Sign into your Account</p>
                         <form className="form" onSubmit= {e => onSubmit(e)}>

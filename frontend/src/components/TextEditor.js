@@ -28,6 +28,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import CodeIcon from '@material-ui/icons/Code';
 require("codemirror/lib/codemirror.css");
 require("codemirror/mode/javascript/javascript");
 require("codemirror/theme/dracula.css");
@@ -44,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    textAlign:"left",
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -377,6 +379,7 @@ public static void main(String[] args) {
     )
     const [Iptext, setIpText] = useState('')
     const [Optext, setOpText] = useState('')
+    const [codetitle, setTitle] = useState('')
 
     useEffect(()=>{
         socket.emit('room', { room: codeRoom});
@@ -519,16 +522,35 @@ const handleClose = () => {
   setAnchorEl(null);
 };
 
-
+const saveCode = (codeText,codetitle, language) => {
+  var encodedsourcecode = btoa(codeText);
+    var mycodes = {
+        "codetext": encodedsourcecode,
+        "languageid": language,
+        "codetitle": codetitle
+      };
+      // console.log(id)
+      var config = {  
+          method:'post',
+          url:'http://localhost:5000/code',
+            data: mycodes,
+            headers: {
+                'userid': localStorage.userid
+            }
+      }
+      
+    axios(config).then(console.log('req sent'))
+}
 
 
     return (
       
-        <div>
+        <div className="codingPlat">
           
           <AppBar className="bar" position="static">
             <Toolbar>
               <Typography variant="h6" className={classes.title}>
+                <CodeIcon className="titleIcon"/>
                 CodeColab
               </Typography>
               {auth && (
@@ -559,11 +581,24 @@ const handleClose = () => {
                 >
                   Run
                 </Button>
+                {/* saving code in db */}
                 <Button
                   variant="contained"
                   color="primary"
                   size="medium"
-                  onClick={ () => createsubmisssion(Codetext, language, Iptext)}
+                  onClick={ () =>{ const codetitle = prompt('Enter the code title:');
+                  saveCode(Codetext,codetitle, language)
+                  }}
+                  className="buttonr"
+                  startIcon={<PlayArrowIcon />}
+                >
+                  Save
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="medium"
+                  // onClick={ () => createsubmisssion(Codetext, language, Iptext)}
                   className="buttonr"
                   startIcon={<SaveIcon />}
                 >
@@ -583,8 +618,9 @@ const handleClose = () => {
                       aria-haspopup="true"
                       onClick={handleMenu}
                       color="inherit"
+                      className="iconButton"
                     >
-                      <AccountCircle />
+                      <AccountCircle className="butIcon" />
                     </IconButton>
                     <Menu
                       id="menu-appbar"
@@ -601,11 +637,13 @@ const handleClose = () => {
                       open={open}
                       onClose={handleClose}
                     >
-                   <Link to='/Profile'>
+                   <Link className="link" to='/Profile'>
                       <MenuItem onClick={handleClose}>Profile</MenuItem>
                     </Link>
 
                       <MenuItem onClick={handleClose}>My account</MenuItem>
+                      <MenuItem onClick={logout}>logout</MenuItem>
+
                     </Menu>
                   </ThemeProvider>
                 </div>
@@ -667,8 +705,6 @@ const handleClose = () => {
                 }}
                   value={Optext}
                 />
-
-                <button onClick={logout}>logout</button>
                 </div>
               </div>
             </div>

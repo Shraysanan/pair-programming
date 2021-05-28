@@ -7,7 +7,7 @@ import {Link, Redirect} from 'react-router-dom';
 import {register} from '../actions/auth';
 import PropTypes from 'prop-types';
 // import Header from "./Header";
-// import "./register.css";
+import "./Register.css";
 
 
 const Register = ({setAlert, register, isAuthenticated}) => { 
@@ -39,10 +39,12 @@ const Register = ({setAlert, register, isAuthenticated}) => {
     return <Fragment>
         {/* <Header/> */}
         <div className="signForm">
-            <div className="container container1 bx">
-                {/* <div className="col-6 col-sm-7 col-md-6">
-                    <img className="loginImg" src="media/exchange.jpg" alt="Registration page" />
-                </div> */}
+        <div className="titleR col-12"> <h1> Welcome to CodeColab !</h1></div>
+            <div className="container container1 bx row">
+
+                <div className="col-6 col-sm-7 col-md-6">
+                    <img className="loginImg" src="register.png" alt="Registration page" />
+                </div>
                 <div className="col-6 col-sm-5 col-md-6">
                     <h1 className="large themeText" >Sign Up</h1>
                     <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
