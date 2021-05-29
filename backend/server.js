@@ -60,7 +60,6 @@ io.on('connection', socket => {
 
   // handle coding event
   socket.on('coding', data => {
-    // console.log("=======================",data);
     socket.to(data.room).emit('code sent from server', data);
   });
 });

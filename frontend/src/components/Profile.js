@@ -20,7 +20,7 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        axios.get("http://localhost:5000/code/mycodes", config).then(response => {console.log("this is repsonse",response.data); setmycode(response.data)} )
+        axios.get("http://localhost:5000/code/mycodes", config).then(response => {setmycode(response.data)} )
     }, [])
     
     return (
@@ -43,13 +43,15 @@ const Profile = () => {
                 <div className="pItem">
                     <div className="myC">
                         <li>{code.codetitle}</li>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            startIcon={<EditIcon />}
-                        >
-                        <Link to={`/mycode/${code._id}`}>Edit</Link>                           
-                        </Button>    
+                        <Link to={`/mycode/${code._id}`}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                startIcon={<EditIcon />}
+                            >
+                            Edit                     
+                            </Button>  
+                        </Link>   
                     </div>
                 </div>
             </div>

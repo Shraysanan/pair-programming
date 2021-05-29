@@ -8,7 +8,7 @@ import {logout} from '../actions/auth'
 import './TextEditor.css'
 import {Controlled as CodeMirror} from 'react-codemirror2'
 import DownloadLink from "react-download-link";
-import { makeStyles, withTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -29,10 +29,16 @@ import FormControl from '@material-ui/core/FormControl';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import CodeIcon from '@material-ui/icons/Code';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 require("codemirror/lib/codemirror.css");
 require("codemirror/mode/javascript/javascript");
 require("codemirror/theme/dracula.css");
-
+require("codemirror/addon/hint/show-hint.js")
+require("codemirror/addon/hint/show-hint.css")
+require("codemirror/addon/hint/javascript-hint.js")
+require('codemirror/addon/edit/closebrackets');
+require('codemirror/addon/edit/matchtags');
+require('codemirror/keymap/sublime');
 
 const socket = io('localhost:5000');
 
@@ -78,7 +84,7 @@ const TextEditor = ({logout}) => {
         {
           "id": 45,
           "name": "Assembly (NASM 2.14.02)",
-          "filename":"",
+          "filename":"main.asm",
           "template":`section	.text
           global _start
       
@@ -539,9 +545,8 @@ const saveCode = (codeText,codetitle, language) => {
             }
       }
       
-    axios(config).then(console.log('req sent'))
+    axios(config)
 }
-
 
     return (
       
@@ -590,7 +595,7 @@ const saveCode = (codeText,codetitle, language) => {
                   saveCode(Codetext,codetitle, language)
                   }}
                   className="buttonr"
-                  startIcon={<PlayArrowIcon />}
+                  startIcon={<SaveIcon />}
                 >
                   Save
                 </Button>
@@ -600,7 +605,7 @@ const saveCode = (codeText,codetitle, language) => {
                   size="medium"
                   // onClick={ () => createsubmisssion(Codetext, language, Iptext)}
                   className="buttonr"
-                  startIcon={<SaveIcon />}
+                  startIcon={<CloudDownloadIcon />}
                 >
                 <DownloadLink
                   label="Download"
@@ -640,8 +645,6 @@ const saveCode = (codeText,codetitle, language) => {
                    <Link className="link" to='/Profile'>
                       <MenuItem onClick={handleClose}>Profile</MenuItem>
                     </Link>
-
-                      <MenuItem onClick={handleClose}>My account</MenuItem>
                       <MenuItem onClick={logout}>logout</MenuItem>
 
                     </Menu>
@@ -659,17 +662,29 @@ const saveCode = (codeText,codetitle, language) => {
               <CodeMirror
                 id="code"
                 value={Codetext}
+              
                 options={{
                   mode: 'javascript',
                   theme: 'dracula',
                   lineNumbers: true,
-                  indent: true  
+                  indent: true,
+                  smartIndent: true,
+                  extraKeys: {
+                    "Tab": "autocomplete"
+                  },
+                  spellcheck: true,
+                  // matchTags: true,
+                  autocorrect: true, 
+                  keyMap: 'sublime',
+                  autoCloseBrackets: true,
+                  matchBrackets: true,
+                  showHint:true,
                 }}
                 onBeforeChange={(editor, data, value) => {
+                  console.log(editor);
                   console.log("value is",value);
                   updateCodeText(value)
                 }}
-
               />
             </div>
             <div className="col-6">
@@ -685,7 +700,11 @@ const saveCode = (codeText,codetitle, language) => {
                   options={{
                     mode: 'javascript',
                     theme: 'dracula',
-                    lineNumbers: true
+                    lineNumbers: true,
+                    indent: true,
+                    smartIndent: true,
+                    spellcheck: true,
+                    autocorrect: true, 
                   }}
                   onBeforeChange={(editor, data, value) => {
                     updateIpText(value)
@@ -701,7 +720,11 @@ const saveCode = (codeText,codetitle, language) => {
                 options={{
                   mode: 'javascript',
                   theme: 'dracula',
-                  lineNumbers: true
+                  lineNumbers: true,
+                  indent: true,
+                  smartIndent: true,
+                  spellcheck: true,
+                  autocorrect: true, 
                 }}
                   value={Optext}
                 />
