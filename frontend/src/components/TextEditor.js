@@ -609,7 +609,7 @@ const saveCode = (codeText,codetitle, language) => {
                 >
                 <DownloadLink
                   label="Download"
-                  filename="main.c"
+                  filename={languages.find(x => x.id == language).filename}
                   exportFile={() => Codetext}
                 > 
                 </DownloadLink>
